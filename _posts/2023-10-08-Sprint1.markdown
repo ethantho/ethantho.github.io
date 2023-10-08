@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "Sprint 1, Ending October 8 2023"
+date:   2023-10-07   22:00 -0400
+categories: studio update
+---
+## Week 1
+
+# Weekly Meeting (2.5 hours)
+The programming squad went a bit over time since there was a lot to discuss as are starting up this cycle.
+
+# Adding Unit Types (4 hours)
+During this week, my original assignment was to simply add the soldier and spearman unit types to the game. However, I completed this within the first couple of hours of work, so I requested more work. I ended up adding all 6 unit types that had been designed to the game. This included rough initial versions of their stats along with ways of detecting each unit type's critical hit conditions.
+
+Implementing the critical hit conditions went surprisingly smoothly, likely thanks to the fact that all battle calculations were moved to a seperate file and simple critical hit conditions were already implemented. The only roadblock was that the giant's critical hit wasn't triggering, but this turned out to be due to confusion between Unit.cs's Health and CurrentHealth variables. Once I realized this, all 6 critical hit types worked during testing.
+
+Additionally, I added the new unit types to the unit spawning UI and made them spawnable by the enemy AI. With these tasks done, a full game can be played against the AI player with the 6 new unit types.
+
+Below is the spawning UI with these 6 unit types available, after the art team rearranged it to look better.
+
+![All Six Untis](/unit_purchase_screen.png)
+
+
+
+# Unit Rotation (3 hours)
+The next task I was given was making units face the direction they move, face the direction they attack, and face the camera when idle. After a bit of testing I discovered that units already behaved this way, apart from facing the camera when idle, so I implemented this and reported back to Nikhil. 
+
+I was then told by Jordan that he wanted units to snap onto one of 8 directions (N, S, W ,E NW, NE, SW, SE) rather than facing directly towards the target. I used dot products with each of the 8 vectors to determine which one was the closest fit to the true direction towards the enemy.
+
+Writing this function was fairly straight forward, but using it successfully turned out to be quite difficult. My code to detect whether or not a unit was idle was behaving oddly, leading to units only sometimes facing towards the enemy they are attacking. This turned out to be mainly caused by the unit animators never returning to the idle state after attacking. Along with a couple other fixes, a single transition arrow added to the animation controllers made things function as intended.
+
+# Aerial Units (2 hours)
+Later in the week my squad's designers gave me the stats for two new unit types: aeronaut and war balloon. These were the first "aerial units" in the game, so in addition to adding their stats and implementing their critical hit conditions, I had to add two new booleans to UnitType.cs: Aerial, and CanAttackAerial. I also had to slightly modify BattleSystem.cs to take these booleans into account when determining attack damage. 
+
+# Fixing an AI Bug (1 hour)
+Because it is impossible for some units to damage aerial units, Nikhil discovered an issue where the AI would send units to attack aerial units, resulting to zero damage given and taking counterattack damage. In order to fix this I had to learn how the current AI system worked, which took a bit of time. Then once I felt I understood it, I found that making the AttackOpponentStrategyFactory not add a strategy if it would lead to a useless attack on an aerial unit fixed the issue.
+
+
+## Week 2
+
+# Weekly Meeting (2.5 hours)
+I stayed for a while after the meeting officially ended at 1:00 to meet with the general gameplay team and discuss how different types of units would deal with moving through different types of terrain. We decided that UnitType.cs will likely need a dictionary mapping TileType objects to costs.
+
+# Updating Unit Stats (0.5 hours)
+Nikhil told me at the meeting to scale the unit health values to be centered around 100. I set the soldier's health to 100 and adjusted all other units' health, attack, and armor to be proportional to that.
+
+# Dialogue Box System (4 hours)
+Since there wasn't much to do for the Units and Champions team this week, Nikhil assigned me to make a dialogue system to be used in the tutorials. I made a new scriptable object type called "Dialogue" that stores the name of the speaker and the sentences that they say. These objects are sent to the Dialogue Manager and displayed in a UI box, one character at a time.
+
+# Example Tutorial (4 hours)
+To demonstrate how to use the dialogue box system, I was tasked with creating a very basic in-game tutorial. I had to create a copy of the Gameplay scene called "TutorialGameplay" in order to do this, and in this scene I had a script spawn in units, track the player's progress through the tutorial, and display informational messages with the dialogue system.
+
+<video muted autoplay controls>
+    <source src="{{ site.my-media-path }}/tutorial.mp4" type="video/mp4">
+</video>
+
+# Critical Hit Indicator (1 hour)
+I added a simple critical hit indicator to the battle preview. This ended up taking quite a while to implement despite its simplicity since the master branch was unplayable. First the terrain was generating in stripes rather than a solid grid, and then once that was fixed the camera movement no longer worked so I could only move things in the lower left part of the playing field. I still haven't been able to fully test out if this critical hit indicator works, but it is fairly simple so I am fairly sure it will.
+
+## Conclusion
+It was a bit difficult to get enough work to do in the first week since the tasks I was given were not too hard to complete. Thankfully, the more difficult tasks of the second week kept me busy. I am hoping this continues so that I can keep getting work done without needing to go hunting for more tasks.
+
+# Total Time Commitment for this Sprint: 24.5 Hours
