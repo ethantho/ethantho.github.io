@@ -1,0 +1,8 @@
+Invert shader: https://stackoverflow.com/questions/54739349/unity-2d-area-color-inverse-effect
+Most Sprites by: https://www.patreon.com/slynyrd/shop
+Backgrounds by: https://www.patreon.com/ansimuz
+Music by: https://doranarasi.com/
+Explosion by: https://opengameart.org/users/tinyworlds
+Shooting sound by: https://opengameart.org/users/lukerustltd
+Boss warning sound by: https://freesound.org/people/Rickplayer/sounds/531488/
+Another Boss warning sound by: https://freesound.org/people/mirkosukovic/sounds/435666/
